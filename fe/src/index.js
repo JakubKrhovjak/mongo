@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Button from '@material-ui/core/Button';
 
 const HelloWorld = () => {
     return (
-        <h1>
-        Hello World
-    </h1>
+        <Button variant="contained" color="primary">
+            Hello World
+        </Button>
 );
 }
 
