@@ -20,4 +20,11 @@ public class Item {
     private String name;
 
     private String description;
+
+    private Status status;
+
+    public enum Status {
+        FULL,
+        EMPTY
+    }
 }
