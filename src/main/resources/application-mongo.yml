@@ -1,6 +1,1 @@
 
-spring:
-  data:
-    mongodb:
-      uri: mongodb://localhost:27018
-      database: test-data

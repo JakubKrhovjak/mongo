@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.ItemRepository;
+import com.example.demo.repository.ItemRepository;
 import com.example.demo.entity.Item;
-import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
@@ -41,21 +41,21 @@ public class ItemController {
 //        return itemRepository.findOne(itemId);
 //    }
 
-    @GetMapping(value = "/exact")
-    public Flux<Item> getItem() {
-        ExampleMatcher matcher = ExampleMatcher.matching()
-            .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.exact());
+//    @GetMapping(value = "/exact")
+//    public Flux<Item> getItem() {
+//        ExampleMatcher matcher = ExampleMatcher.matching()
+//            .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.exact());
+//
+//        return itemRepository.findAll(Example.of(new Item().setName("name"), matcher));
+//    }
 
-        return itemRepository.findAll(Example.of(new Item().setName("name"), matcher));
-    }
-
-    @PostMapping(value = "/item")
-    public void postItem(@RequestBody Item item) {
-        itemRepository.save(item);
-    }
-
-    @GetMapping("/name")
-    public Flux<Item> byName() {
-     return itemRepository.byName("name");
-    }
+//    @PostMapping(value = "/item")
+//    public void postItem(@RequestBody Item item) {
+//        itemRepository.save(item);
+//    }
+//
+//    @GetMapping("/name")
+//    public Flux<Item> byName() {
+//     return itemRepository.byName("name");
+//    }
 }

@@ -5,12 +5,13 @@ import org.mariadb.r2dbc.MariadbConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
 /**
  * Created by Jakub krhovják on 5/13/21.
  */
 @Configuration
-@Profile("maria")
+//@Profile("maria")
 public class MariadbConfiguration {
 
     @Bean

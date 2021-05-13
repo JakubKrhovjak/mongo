@@ -1,2 +1,14 @@
 server:
   port: 8080
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    username: user
+    password: passport
+    url: jdbc:mariadb://127.0.0.1:3320/reactivedb
+  data:
+    mongodb:
+      uri: mongodb://localhost:27018
+      database: test-data

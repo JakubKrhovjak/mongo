@@ -1,7 +1,0 @@
-spring:
-  datasource:
-    username: user
-    password: passport
-    url: "jdbc:mariadb://127.0.0.1:3320/reactivedb
-
-
