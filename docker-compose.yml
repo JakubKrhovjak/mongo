@@ -1,0 +1,16 @@
+version: '3.6'
+
+services:
+  reactivedb:
+    container_name: reactivedb
+    image: docker.io/bitnami/mariadb:10.3
+    ports:
+      - '3320:3306'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=user
+      - MARIADB_PASSWORD=passport
+      - MARIADB_DATABASE=reactivedb
+    restart: always
+
+
