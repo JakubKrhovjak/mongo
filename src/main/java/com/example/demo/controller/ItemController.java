@@ -5,6 +5,8 @@ import com.example.demo.entity.Item;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Flux;
+
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +28,7 @@ public class ItemController {
     private final ItemRepository itemRepository;
 
     @GetMapping
-    public List<Item> getItems() {
+    public Flux<Item> getItems() {
         return itemRepository.findAll();
     }
 
@@ -40,7 +42,7 @@ public class ItemController {
 //    }
 
     @GetMapping(value = "/exact")
-    public List<Item> getItem() {
+    public Flux<Item> getItem() {
         ExampleMatcher matcher = ExampleMatcher.matching()
             .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.exact());
 
@@ -53,7 +55,7 @@ public class ItemController {
     }
 
     @GetMapping("/name")
-    public List<Item> byName() {
+    public Flux<Item> byName() {
      return itemRepository.byName("name");
     }
 }
