@@ -2,13 +2,18 @@ package com.example.demo.controller;
 
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.entity.Item;
+import com.example.demo.service.ItemService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,11 +30,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/mongo")
 public class ItemController {
 
-    private final ItemRepository itemRepository;
+    private final ItemService itemService;
 
     @GetMapping
-    public Flux<Item> getItems() {
-        return itemRepository.findAll();
+    public Mono<Page<Item>> getItems() {
+        PageRequest of = PageRequest.of(0, 1);
+        return itemService.getPage(of);
     }
 
 //    @GetMapping(value = "/{itemId}")
