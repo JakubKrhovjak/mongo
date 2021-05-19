@@ -1,7 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import Button from '@material-ui/core/Button';
-import { httpClient } from "./httpClient";
 import {Items} from "./Items/Items";
 
 
