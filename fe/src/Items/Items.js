@@ -8,7 +8,7 @@ export const Items = (props) => {
     const [state, setState] = useState({items: []})
 
     useEffect(() => {
-        httpClient.get("/mongo")
+        httpClient.post("/mongo")
             .then(res => {
                 setState({items: res.data.content})
             })
@@ -17,17 +17,33 @@ export const Items = (props) => {
 
 
     const columns = [
-        {field: "id", hide:true},
+        {field: "id", hide: true},
         {field: "name", headerName: "Name", width: 150},
         {field: "description", headerName: "Description", width: 150},
         {field: "status", headerName: "Status", width: 150},
 
     ];
 
+    const handleFilterModelChange = (model) => {
+        httpClient.post("/mongo", model.filterModel)
+            .then(res => {
+                setState({items: res.data.content})
+            })
+            .catch(e => console.log(e))
+    
+    }
 
     return (
         <div style={{height: "100%", width: "100%"}}>
-            <DataGrid rows={state.items} columns={columns}/>
+            <DataGrid rows={state.items} columns={columns}
+                      filterMode="server"
+                      onFilterModelChange={handleFilterModelChange}
+                      // filterModel={{
+                      //     items: [
+                      //         {columnField: "name", operatorValue: "contains", value: ''},
+                      //     ],
+                      // }}
+            />
         </div>
     );
 

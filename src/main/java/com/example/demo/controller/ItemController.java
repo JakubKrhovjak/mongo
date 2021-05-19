@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.table.TableRequest;
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.entity.Item;
 import com.example.demo.service.ItemService;
@@ -32,8 +33,8 @@ public class ItemController {
 
     private final ItemService itemService;
 
-    @GetMapping
-    public Mono<Page<Item>> getItems() {
+    @PostMapping
+    public Mono<Page<Item>> getItems(@RequestBody(required = false) TableRequest tableRequest) {
         PageRequest of = PageRequest.of(0, 1);
         return itemService.getPage(of);
     }
