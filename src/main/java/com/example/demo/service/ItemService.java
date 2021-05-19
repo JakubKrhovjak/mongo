@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -20,7 +21,7 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 public class ItemService {
 
-    private ItemRepository itemRepository;
+    private final ItemRepository itemRepository;
 
     public Mono<Page<Item>> getPage(Pageable pageable) {
         return this.itemRepository.count()
@@ -28,7 +29,7 @@ public class ItemService {
                     return this.itemRepository.findAll(pageable.getSort())
                             .buffer(pageable.getPageSize(), (pageable.getPageNumber() + 1))
                             .elementAt(pageable.getPageNumber(), new ArrayList<>())
-                            .map(users -> new PageImpl<Item>(users, pageable, userCount));
+                            .map(rows -> new PageImpl<Item>(rows, pageable, userCount));
                 });
     }
 }

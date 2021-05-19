@@ -17,7 +17,7 @@ export const Items = (props) => {
     useEffect(() => {
         httpClient.get("/mongo")
             .then(res => {
-                setState({items: res.data})
+                setState({items: res.data.content})
             })
             .catch(e => console.log(e))
     }, [])
@@ -34,7 +34,7 @@ export const Items = (props) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {state.items.map((row) => (
+                    {state.items.map(row => (
                         <TableRow key={row.name}>
                             <TableCell component="th" scope="row">
                                 {row.name}
