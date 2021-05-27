@@ -5,8 +5,10 @@ import com.example.demo.repository.ItemRepository;
 import com.example.demo.entity.Item;
 import com.example.demo.service.ItemService;
 
+import com.example.demo.service.QueryBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.query.Query;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -35,6 +37,7 @@ public class ItemController {
 
     @PostMapping
     public Mono<Page<Item>> getItems(@RequestBody(required = false) TableRequest tableRequest) {
+        QueryBuilder.buildQuery(tableRequest);
         PageRequest of = PageRequest.of(0, 1);
         return itemService.getPage(of,  tableRequest);
     }

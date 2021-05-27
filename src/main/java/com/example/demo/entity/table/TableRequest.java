@@ -11,5 +11,11 @@ import lombok.Data;
 @Data
 public class TableRequest {
 
-    private List<ObjectNode> items;
+    private List<Filter> items;
+
+    private int skip = 0;
+
+    private int limit = 30;
+
+
 }

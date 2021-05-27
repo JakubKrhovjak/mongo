@@ -49,7 +49,7 @@ public class ItemService {
        return reactiveMongoTemplate.find(query, Item.class).count()
             .flatMap(count -> {
                 return reactiveMongoTemplate.find(query, Item.class)
-                    .buffer(pageable.getPageSize(), (pageable.getPageNumber() + 1))
+                    .buffer(query.getLimit(), Long.valueOf(query.getSkip()).intValue())
                     .elementAt(pageable.getPageNumber(), new ArrayList<>())
                     .map(rows -> new PageImpl<Item>(rows, pageable, count));
             });
@@ -78,6 +78,20 @@ public class ItemService {
 //                            .map(rows -> new PageImpl<Item>(rows, pageable, userCount));
 //                });
     }
+
+//    public Mono<Page<Item>> getPage(Query query) {
+//        query.get
+//        return reactiveMongoTemplate.find(query, Item.class).count()
+//            .flatMap(count -> {
+//                return reactiveMongoTemplate.find(query, Item.class)
+//                    .buffer(pageable.getPageSize(), (pageable.getPageNumber() + 1))
+//                    .elementAt(pageable.getPageNumber(), new ArrayList<>())
+//                    .map(rows -> new PageImpl<Item>(rows, pageable, count));
+//            });
+//
+//    }
+
+
 
 
 
