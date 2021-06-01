@@ -36,10 +36,9 @@ public class ItemController {
     private final ItemService itemService;
 
     @PostMapping
-    public Mono<Page<Item>> getItems(@RequestBody(required = false) TableRequest tableRequest) {
-        QueryBuilder.buildQuery(tableRequest);
-        PageRequest of = PageRequest.of(0, 1);
-        return itemService.getPage(of,  tableRequest);
+    public Mono<Page<Item>> getItems(@RequestBody TableRequest tableRequest) {
+        Query query = QueryBuilder.buildQuery(tableRequest);
+        return itemService.getPage(query);
     }
 
 //    @GetMapping(value = "/{itemId}")

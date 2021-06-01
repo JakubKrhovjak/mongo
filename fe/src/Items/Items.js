@@ -2,13 +2,14 @@ import React, {useEffect, useState} from "react";
 import {DataGrid} from "@material-ui/data-grid";
 import {httpClient} from "../httpClient";
 
+export const DEFAULT_REQUEST = {items: [], page: 1, pageSize: 1 }
 
 export const Items = (props) => {
 
     const [state, setState] = useState({items: []})
 
     useEffect(() => {
-        httpClient.post("/mongo")
+        httpClient.post("/mongo", DEFAULT_REQUEST)
             .then(res => {
                 setState({items: res.data.content})
             })
@@ -30,7 +31,7 @@ export const Items = (props) => {
                 setState({items: res.data.content})
             })
             .catch(e => console.log(e))
-    
+
     }
 
     return (

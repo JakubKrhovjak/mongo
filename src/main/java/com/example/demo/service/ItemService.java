@@ -9,6 +9,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -35,7 +36,7 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    public Mono<Page<Item>> getPage(Pageable pageable,  TableRequest tableRequest) {
+    public Mono<Page<Item>> getPage(Query query) {
 //        ExampleMatcher matching = ExampleMatcher.matching().withMatcher("name", match -> match.stringMatcher(ExampleMatcher.StringMatcher.EXACT));
 //        Example.of()
 
@@ -45,13 +46,14 @@ public class ItemService {
 //            return  v;
 //        })
 //            .subscribe();
-                    var query = new Query(Criteria.where("name").regex(".*name.*")).with(pageable);
-       return reactiveMongoTemplate.find(query, Item.class).count()
+        int page = (int )query.getSkip() / query.getLimit();
+        return reactiveMongoTemplate.find(query, Item.class).count()
             .flatMap(count -> {
                 return reactiveMongoTemplate.find(query, Item.class)
-                    .buffer(query.getLimit(), Long.valueOf(query.getSkip()).intValue())
-                    .elementAt(pageable.getPageNumber(), new ArrayList<>())
-                    .map(rows -> new PageImpl<Item>(rows, pageable, count));
+                    .buffer(query.getLimit(), Long.valueOf(query.getSkip()).intValue() + 1)
+                    .elementAt(0, new ArrayList<>())
+                    .map(rows -> new PageImpl<Item>(rows, PageRequest.of(page, query.getLimit()), count));
+//                    .map(rows -> new PageImpl<Item>(rows, pageable, count));
             });
 
 //        PageableExecutionUtils.getPage()

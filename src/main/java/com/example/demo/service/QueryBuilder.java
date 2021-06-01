@@ -33,11 +33,19 @@ public final class QueryBuilder {
         var query = new Query();
         tableRequest.getItems().forEach(filter -> {
             if(OperatorType.CONTAINS.is(filter.getOperatorValue())){
-                query.addCriteria(Criteria.where("name").regex(".*name.*")).limit(tableRequest.getLimit()).skip(tableRequest.getSkip());
-
+                query.addCriteria(Criteria.where(filter.getColumnField()).regex(".*" + filter.getValue() +  ".*"));
+            }
+            if(OperatorType.EQUALS.is(filter.getOperatorValue())){
+                query.addCriteria(Criteria.where(filter.getColumnField()).regex(filter.getValue()));
+            }
+            if(OperatorType.STARTS_WITH.is(filter.getOperatorValue())){
+                query.addCriteria(Criteria.where(filter.getColumnField()).regex(".*" + filter.getValue()));
+            }
+            if(OperatorType.END_WITH.is(filter.getOperatorValue())){
+                query.addCriteria(Criteria.where(filter.getColumnField()).regex(filter.getValue()+  ".*"));
             }
         });
-        return query;
+        return query.with(PageRequest.of(tableRequest.getPage(), tableRequest.getPageSize()));
 
     }
 

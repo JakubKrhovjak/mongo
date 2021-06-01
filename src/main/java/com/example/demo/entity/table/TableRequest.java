@@ -3,6 +3,8 @@ package com.example.demo.entity.table;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import lombok.Data;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 
 /**
@@ -11,11 +13,9 @@ import lombok.Data;
 @Data
 public class TableRequest {
 
-    private List<Filter> items;
+    private List<Filter> items = List.of();
 
-    private int skip = 0;
+    private int page;
 
-    private int limit = 30;
-
-
+    private int pageSize;
 }
