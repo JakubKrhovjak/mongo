@@ -10,6 +10,7 @@ import org.apache.commons.text.WordUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
@@ -52,8 +53,7 @@ public final class QueryBuilder {
                 query.addCriteria(Criteria.where(filter.getColumnField()).regex(filter.getValue() + ".*"));
             }
         });
-
-        return query.with(PageRequest.of(tableRequest.getPage(), tableRequest.getPageSize()));
+        return query.with(PageRequest.of(tableRequest.getPage(), tableRequest.getPageSize(), tableRequest.getSort()));
 
     }
 

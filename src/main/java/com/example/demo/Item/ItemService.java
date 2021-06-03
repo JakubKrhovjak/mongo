@@ -1,27 +1,19 @@
-package com.example.demo.service;
+package com.example.demo.Item;
 
-import com.example.demo.entity.Item;
-import com.example.demo.entity.table.TableRequest;
-import com.example.demo.repository.ItemRepository;
+import com.example.demo.Item.domain.Item;
 
+import com.example.demo.service.PageSupport;
+import com.example.demo.service.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.TextCriteria;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**

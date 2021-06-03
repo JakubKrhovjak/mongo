@@ -5,6 +5,7 @@ import java.util.List;
 import lombok.Data;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 
 /**
@@ -18,4 +19,13 @@ public class TableRequest {
     private int page;
 
     private int pageSize;
+
+    private Sorting sort;
+
+    public Sort getSort() {
+        return sort.getDirection()
+            .map(direction -> Sort.by(direction, sort.getField()))
+            .orElse(Sort.unsorted());
+
+    }
 }

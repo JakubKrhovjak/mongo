@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Item;
 import java.util.ArrayList;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {DataGrid} from "@material-ui/data-grid";
 import {httpClient} from "../httpClient";
 
-export const DEFAULT_STATE = {items: [], page: 0, pageSize: 30}
+export const DEFAULT_STATE = {items: [], page: 0, pageSize: 30, sort: {}}
 
 export const Items = (props) => {
 
@@ -25,10 +25,9 @@ export const Items = (props) => {
 
     ];
 
-    const handleFilterModelChange = (model) => {
-        const filters = model.filterModel.items;
-       const a = filters.find(f => f.value);
-        a && httpClient.post("/mongo", {
+    const handleFilterModelChange = (event) => {
+        const filters = event.filterModel.items;
+        filters.find(f => f.value) && httpClient.post("/mongo", {
             filters: filters,
             page: state.page,
             pageSize: state.pageSize
@@ -36,8 +35,12 @@ export const Items = (props) => {
             .then(res => {
                 setState({...state, items: res.data.content})
             })
+    }
 
-
+    const onSortModelChange = (event, b, c) => {
+        const sort =  event.sortModel;
+        setState({...state, sort: {...event.sortModel, directions:  event.sortModel.sort}})
+        console.log(a);
     }
 
     return (
@@ -45,6 +48,7 @@ export const Items = (props) => {
             <DataGrid rows={state.items} columns={columns}
                       filterMode="server"
                       onFilterModelChange={handleFilterModelChange}
+                      onSortModelChange={onSortModelChange}
                 // filterModel={{
                 //     items: [
                 //         {columnField: "name", operatorValue: "contains", value: ''},
