@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {DataGrid} from "@material-ui/data-grid";
 import {httpClient} from "../httpClient";
+import {Table} from "./components/Table";
 
-export const DEFAULT_STATE = {items: [], filters: [], page: 0, pageSize: 30, sort: {}}
 
 
 const columns = [
@@ -15,41 +15,23 @@ const columns = [
 
 export const Items = (props) => {
 
-    const [state, setState] = useState(DEFAULT_STATE)
+    const [state, setState] = useState({items: []})
 
-    useEffect(() => {
-        fetItems();
-    }, [state])
-
-    const fetItems = () => {
-        httpClient.post("/mongo", state)
+    const fetItems = (tableState) => {
+        httpClient.post("/mongo", tableState)
             .then(res => {
                 setState({...state, items: res.data.content})
             })
             .catch(e => console.log(e))
     }
 
-    const handleFilterModelChange = (event) => {
-        const filters = event.filterModel.items;
-        filters.find(f => f.value) && setState({...state, filters})
-    }
 
-    const onSortModelChange = (event) => {
-        setState({...state, sort: {...event.sortModel, direction:  event.sortModel.sort}})
-    }
 
     return (
         <div style={{height: "100%", width: "100%"}}>
-            <DataGrid rows={state.items} columns={columns}
-                      filterMode="server"
-                      onFilterModelChange={handleFilterModelChange}
-                      onSortModelChange={onSortModelChange}
-                // filterModel={{
-                //     items: [
-                //         {columnField: "name", operatorValue: "contains", value: ''},
-                //     ],
-                // }}
-            />
+                <Table columns={columns}
+                       data={state.items}
+                       fetch={fetItems} />
         </div>
     );
 
