@@ -37,22 +37,13 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     public Mono<Page<Item>> getPage(Query query) {
-//        ExampleMatcher matching = ExampleMatcher.matching().withMatcher("name", match -> match.stringMatcher(ExampleMatcher.StringMatcher.EXACT));
-//        Example.of()
-
-//        var query = new Query(Criteria.where("name").is("name2"));
-//        var a = reactiveMongoTemplate.find(query, Item.class).map(v -> {
-//            v.equals("aa");
-//            return  v;
-//        })
-//            .subscribe();
-        int page = (int )query.getSkip() / query.getLimit();
         return reactiveMongoTemplate.find(query, Item.class).count()
             .flatMap(count -> {
                 return reactiveMongoTemplate.find(query, Item.class)
-                    .buffer(query.getLimit(), Long.valueOf(query.getSkip()).intValue() + 1)
+                    .buffer(query.getLimit(), (int) query.getSkip() + 1)
                     .elementAt(0, new ArrayList<>())
-                    .map(rows -> new PageImpl<Item>(rows, PageRequest.of(page, query.getLimit()), count));
+                    .map(rows -> QueryBuilder.buildPage(rows, query, count));
+//                    .map(rows -> new PageImpl<Item>(rows, PageRequest.of(page, query.getLimit()), count));
 //                    .map(rows -> new PageImpl<Item>(rows, pageable, count));
             });
 

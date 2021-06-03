@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 @Data
 public class TableRequest {
 
-    private List<Filter> items = List.of();
+    private List<Filter> filters = List.of();
 
     private int page;
 

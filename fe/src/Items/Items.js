@@ -2,16 +2,16 @@ import React, {useEffect, useState} from "react";
 import {DataGrid} from "@material-ui/data-grid";
 import {httpClient} from "../httpClient";
 
-export const DEFAULT_REQUEST = {items: [], page: 1, pageSize: 1 }
+export const DEFAULT_STATE = {items: [], page: 0, pageSize: 30}
 
 export const Items = (props) => {
 
-    const [state, setState] = useState({items: []})
+    const [state, setState] = useState(DEFAULT_STATE)
 
     useEffect(() => {
-        httpClient.post("/mongo", DEFAULT_REQUEST)
+        httpClient.post("/mongo", state)
             .then(res => {
-                setState({items: res.data.content})
+                setState({...state, items: res.data.content})
             })
             .catch(e => console.log(e))
     }, [])
@@ -26,11 +26,17 @@ export const Items = (props) => {
     ];
 
     const handleFilterModelChange = (model) => {
-        httpClient.post("/mongo", model.filterModel)
+        const filters = model.filterModel.items;
+       const a = filters.find(f => f.value);
+        a && httpClient.post("/mongo", {
+            filters: filters,
+            page: state.page,
+            pageSize: state.pageSize
+        })
             .then(res => {
-                setState({items: res.data.content})
+                setState({...state, items: res.data.content})
             })
-            .catch(e => console.log(e))
+
 
     }
 
@@ -39,11 +45,11 @@ export const Items = (props) => {
             <DataGrid rows={state.items} columns={columns}
                       filterMode="server"
                       onFilterModelChange={handleFilterModelChange}
-                      // filterModel={{
-                      //     items: [
-                      //         {columnField: "name", operatorValue: "contains", value: ''},
-                      //     ],
-                      // }}
+                // filterModel={{
+                //     items: [
+                //         {columnField: "name", operatorValue: "contains", value: ''},
+                //     ],
+                // }}
             />
         </div>
     );
