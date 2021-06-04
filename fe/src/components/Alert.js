@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {makeStyles} from '@material-ui/core/styles';
 import {Alert as MuiAlert, AlertTitle} from "@material-ui/lab";
 
@@ -14,8 +14,15 @@ const useStyles = makeStyles({
 
 export const Alert = ({show, message, ...rest}) => {
     const classes = useStyles();
+
+    const [state, setState] = useState({show});
+
+    useEffect(() => {
+        setState({show})
+    }, [show])
+
     return (
-        show && <MuiAlert {...rest} className={classes.root}>
+        state.show && <MuiAlert {...rest} className={classes.root} onClick={() => setState({show: false})}>
             <AlertTitle>Error</AlertTitle>
             {message}
         </MuiAlert>
