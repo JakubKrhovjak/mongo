@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {DataGrid} from "@material-ui/data-grid";
 
-export const DEFAULT_STATE = { filters: [], page: 0, pageSize: 30, sort: {}}
-
+export const DEFAULT_STATE = {filters: [], page: 0, pageSize: 30, sort: {}}
 
 export const Table = ({columns, data, fetch}) => {
 
@@ -14,11 +13,11 @@ export const Table = ({columns, data, fetch}) => {
 
     const handleFilterModelChange = (event) => {
         const filters = event.filterModel.items;
-         filters.find(f => f.value) && setState({...state, filters})
+        filters.find(f => f.value) && setState({...state, filters})
     }
 
     const onSortModelChange = (event) => {
-        setState({...state, sort: {...event.sortModel, direction:  event.sortModel.sort}})
+        setState({...state, sort: {...event.sortModel, direction: event.sortModel.sort}})
     }
 
     return (

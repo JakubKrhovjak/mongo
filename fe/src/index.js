@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Items} from "./Items/Items";
+import {Items} from "./pages/Items";
 
 
 const HelloWorld = () => {
