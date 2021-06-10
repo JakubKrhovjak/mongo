@@ -1,25 +1,20 @@
 import React, {useEffect, useState} from "react";
 import {makeStyles} from '@material-ui/core/styles';
-import Grow from '@material-ui/core/Grow';
 import {Alert as MuiAlert, AlertTitle} from "@material-ui/lab";
 import Slide from "@material-ui/core/Slide";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles({
-    root: {
+        root: {
 
-        zIndex: "2000 !important",
-        position: "absolute",
-        opacity: "0.8 !important",
-        width: "90%",
-        marginTop: "5%"
-    },
-    // container: {
-    //     display: "flex",
-    //     justifyContent: "center",
-    //     alignItems: "center",
-    // }
-
-});
+            zIndex: "2000 !important",
+            position: "absolute",
+            opacity: "0.8 !important",
+            width: "90%",
+            marginTop: "5%"
+        },
+    })
+;
 
 export const Alert = ({show, message, ...rest}) => {
     const classes = useStyles();
@@ -32,13 +27,14 @@ export const Alert = ({show, message, ...rest}) => {
 
     return (
         state.show &&
-
-            <Slide id="alert" in={show} timeout={1000} className={classes.root} onClick={() => setState({show: false})}>
+        <Grid container justify="center">
+            <Slide in={show} timeout={1000} className={classes.root} onClick={() => setState({show: false})}>
                 <MuiAlert {...rest} className={classes.root}>
                     <AlertTitle>Error</AlertTitle>
                     {message}
                 </MuiAlert>
             </Slide>
+        </Grid>
 
 
     )
