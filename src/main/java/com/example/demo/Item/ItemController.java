@@ -6,6 +6,7 @@ import com.example.demo.Item.domain.Item;
 import com.example.demo.service.QueryBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.query.Query;
 import reactor.core.publisher.Mono;
 
@@ -30,7 +31,9 @@ public class ItemController {
     @PostMapping
     public Mono<Page<Item>> getItems(@RequestBody TableRequest tableRequest) {
         Query query = QueryBuilder.buildQuery(tableRequest);
-        return itemService.getPage(query);
+
+        var pageable = PageRequest.of(tableRequest.getPage(), tableRequest.getPageSize(), tableRequest.getSort());
+        return itemService.getPage(query, pageable);
     }
 
 //    @GetMapping(value = "/{itemId}")

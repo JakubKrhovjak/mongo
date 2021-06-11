@@ -29,7 +29,7 @@ export const Items = (props) => {
         <div style={{height: "100%", width: "100%"}}>
           <Alert severity="error"  message={getError(state.error)} show={!!state.error} />
             <Table columns={columns}
-                   data={state.page.content}
+                   page={state.page}
                    fetch={fetItems}/>
         </div>
     );

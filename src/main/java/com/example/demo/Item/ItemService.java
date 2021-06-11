@@ -6,6 +6,7 @@ import com.example.demo.service.PageSupport;
 import com.example.demo.service.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -28,16 +29,39 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    public Mono<Page<Item>> getPage(Query query) {
-        return reactiveMongoTemplate.find(query, Item.class).count()
+    public Mono<Page<Item>> getPage(Query query, Pageable pageable) {
+
+        return reactiveMongoTemplate.count(query, Item.class)
             .flatMap(count -> {
-                return reactiveMongoTemplate.find(query, Item.class)
-                    .buffer(query.getLimit(), (int) query.getSkip() + 1)
-                    .elementAt(0, new ArrayList<>())
-                    .map(rows -> QueryBuilder.buildPage(rows, query, count));
-//                    .map(rows -> new PageImpl<Item>(rows, PageRequest.of(page, query.getLimit()), count));
-//                    .map(rows -> new PageImpl<Item>(rows, pageable, count));
+                return reactiveMongoTemplate.find(query.with(pageable), Item.class)
+                    .buffer(pageable.getPageSize(), 1)
+                    .map(v -> {
+                        return v;
+                    })
+                    .elementAt(0 , new ArrayList<>())
+                    .map(rows -> {
+
+                        return new PageImpl<Item>(rows, pageable, count);
+                    });
+
             });
+    }
+
+//    public Mono<?> getPageA(Query query, Pageable pageable) {
+//        return reactiveMongoTemplate.count(query, Item.class)
+//            .flatMap(count -> {
+//                return reactiveMongoTemplate.find(query, Item.class)
+//                    .buffer(pageable.getPageSize(), pageable.getPageNumber() + 1)
+////                    .elementAt(pageable.getPageNumber(), new ArrayList<>())
+//                    .map(rows -> {
+//
+//                        return new PageImpl<Item>(rows, pageable, count);
+//                    });
+//                //                    .map(rows -> QueryBuilder.buildPage(rows, query, count));
+//                //                    .map(rows -> new PageImpl<Item>(rows, PageRequest.of(page, query.getLimit()), count));
+//                //                    .map(rows -> new PageImpl<Item>(rows, pageable, count));
+//            });
+//    }
 
 //        PageableExecutionUtils.getPage()
 //        reactiveMongoTemplate.query(Item.class).matching(criteria)
@@ -62,7 +86,7 @@ public class ItemService {
 //                            .elementAt(pageable.getPageNumber(), new ArrayList<>())
 //                            .map(rows -> new PageImpl<Item>(rows, pageable, userCount));
 //                });
-    }
+//    }
 
 //    public Mono<Page<Item>> getPage(Query query) {
 //        query.get
