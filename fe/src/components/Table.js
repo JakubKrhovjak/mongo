@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {DataGrid} from "@material-ui/data-grid";
 
-export const DEFAULT_STATE = {filters: [], page: 0, pageSize: 1, sort: {}}
+export const DEFAULT_STATE = {filters: [], page: 0, pageSize: 30, sort: {}}
 
 export const Table = ({columns, page, fetch}) => {
 
