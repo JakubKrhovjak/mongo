@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import reactor.core.publisher.Mono;
 
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Created by Jakub krhovják on 5/2/21.
  */
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController

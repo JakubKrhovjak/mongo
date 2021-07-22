@@ -17,6 +17,6 @@ public class CorsGlobalConfiguration implements WebFluxConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry) {
         corsRegistry.addMapping("/**")
-                .allowedOrigins("http://localhost:8090");
+            .allowedOrigins("http://localhost:8090");
     }
 }
