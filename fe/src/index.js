@@ -1,12 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Items} from "./pages/Items";
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {Login} from "./pages/Login";
 
-const HelloWorld = () => {
+const Index = () => {
+    const [token, setToken] = useState();
+
+    if(!token) {
+        return <Login setToken={setToken} />
+    }
+
 
     return (
-        <Items/>
+        <BrowserRouter>
+            <Switch>
+                <Route exact path='/items'>
+                    <Items/>
+                </Route>
+                <Route path='/'>
+                    <Login/>
+                </Route>
+            </Switch>
+        </BrowserRouter>
     );
 }
 
-ReactDOM.render(<HelloWorld/>, document.getElementById("root"));
+ReactDOM.render(<Index/>, document.getElementById("root"));

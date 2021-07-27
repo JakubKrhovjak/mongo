@@ -17,19 +17,19 @@ export const Items = (props) => {
 
     const [state, setState] = useState({page: {content: []}, error: null})
 
-    useEffect(() => {
-        let eventSource = new EventSource("http://localhost:8080/event")
-        eventSource.onmessage = e => {
-            console.log("Message: ", e)
-        }
-        eventSource.onerror = e => {
-            console.log("error: ", e)
-        }
-
-        eventSource.onopen = e => {
-            console.log("onopen: ", e)
-        }
-    }, [])
+    // useEffect(() => {
+    //     let eventSource = new EventSource("http://localhost:8080/event")
+    //     eventSource.onmessage = e => {
+    //         console.log("Message: ", e)
+    //     }
+    //     eventSource.onerror = e => {
+    //         console.log("error: ", e)
+    //     }
+    //
+    //     eventSource.onopen = e => {
+    //         console.log("onopen: ", e)
+    //     }
+    // }, [])
 
     const fetItems = (tableState) => {
         httpService.page("/mongo", tableState, data => {

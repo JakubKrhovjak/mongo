@@ -45,9 +45,12 @@ public class SecurityConfiguration  {
         http
             .authorizeExchange(exchanges ->
                 exchanges
+                    .pathMatchers("/", "/login")
+                    .authenticated()
                     .anyExchange().authenticated()
             )
             .cors()
+
             .and()
             .csrf()
             .disable()

@@ -6,13 +6,13 @@ const httpClient = axios.create({
 
 export const httpService = {
 
-    // post: (url, data, action) => {
-    //      httpClient.post(url, data)
-    //          .then(res => {
-    //               action(res.data)
-    //          })
-    //          .catch(e => action(e.data))
-    //  },
+    post: (url, data, action) => {
+         httpClient.post(url, data)
+             .then(res => {
+                  action(res.data)
+             })
+             .catch(e => action(e.data))
+     },
 
     page: (url, data, action) => {
         httpClient.post(url, data)
