@@ -45,12 +45,11 @@ public class SecurityConfiguration  {
         http
             .authorizeExchange(exchanges ->
                 exchanges
-                    .pathMatchers("/", "/login")
-                    .authenticated()
+                    .pathMatchers("/", "/login","/token")
+                    .permitAll()
                     .anyExchange().authenticated()
             )
             .cors()
-
             .and()
             .csrf()
             .disable()
@@ -58,8 +57,10 @@ public class SecurityConfiguration  {
 //            .csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
 //            .and()
 
-            .httpBasic(withDefaults())
-            .formLogin(withDefaults());
+            .httpBasic()
+            .disable()
+            .formLogin()
+            .disable();
         return http.build();
     }
 }
