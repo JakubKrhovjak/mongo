@@ -4,7 +4,7 @@ import {getError} from "../utils/commonUtils";
 
 export const DataContext = React.createContext();
 
-export const AlertContextProvider = ({children}) => {
+export const DataContextProvider = ({children}) => {
 
     const [state, setState] = useState({page: {content: []}, error: null})
 

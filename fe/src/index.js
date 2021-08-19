@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Items} from "./pages/Items";
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import {Login} from "./pages/Login";
-import {AlertContextProvider} from "./context/DataContext";
+import {DataContextProvider} from "./context/DataContext";
 
 const Index = () => {
     const [state, setState] = useState({token: "123", error: null});
@@ -13,7 +13,7 @@ const Index = () => {
     }
 
     return (
-        <AlertContextProvider>
+        <DataContextProvider>
             <BrowserRouter>
                 <Switch>
                     <Route exact path='/items'>
@@ -24,7 +24,7 @@ const Index = () => {
                     </Route>
                 </Switch>
             </BrowserRouter>
-        </AlertContextProvider>
+        </DataContextProvider>
     );
 }
 
