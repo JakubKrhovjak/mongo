@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useState, useContext} from "react";
 import {httpService} from "../httpClient";
 import {Table} from "../components/Table";
-import {Alert} from "../components/Alert";
-import {getError} from "../utils/commonUtils";
+import {AlertContext} from "../context/AlertContext";
 
 
 const columns = [
@@ -14,7 +13,7 @@ const columns = [
 ];
 
 export const Items = (props) => {
-
+    const { setError } = useContext(AlertContext);
     const [state, setState] = useState({page: {content: []}, error: null})
 
     // useEffect(() => {
@@ -34,13 +33,13 @@ export const Items = (props) => {
     const fetItems = (tableState) => {
         httpService.page("/mongo", tableState, data => {
                 setState(data)
+                setError(data)
             }
         )
     }
 
     return (
         <div style={{height: "100%", width: "100%"}}>
-          <Alert severity="error"  message={getError(state.error)} show={!!state.error} />
             <Table columns={columns}
                    page={state.page}
                    fetch={fetItems}/>

@@ -22,7 +22,7 @@ export const httpService = {
                 action({page: res.data, error: null})
             })
             .catch(e => {
-                action({page: {content: []}, error: e.response.data.error})
+                action({page: {content: []}, error: e?.response?.data?.error})
             })
     }
 }
