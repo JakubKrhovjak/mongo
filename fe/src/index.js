@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import ReactDOM from 'react-dom';
+import React, {useState} from "react";
+import ReactDOM from "react-dom";
 import {Items} from "./pages/Items";
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import {Login} from "./pages/Login";
@@ -25,6 +25,7 @@ const Index = () => {
                 </Switch>
             </BrowserRouter>
         </DataContextProvider>
+
     );
 }
 

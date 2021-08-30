@@ -8,6 +8,7 @@ export const Table = ({columns, page, fetch}) => {
     const [state, setState] = useState(DEFAULT_STATE)
 
     useEffect(() => {
+        console.log(state)
         fetch(state);
     }, [state])
 

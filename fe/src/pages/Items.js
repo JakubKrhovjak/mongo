@@ -1,7 +1,8 @@
-import React, {useContext} from "react";
+import React, {useContext, useMemo} from "react";
 import {httpService} from "../httpClient";
 import {Table} from "../components/Table";
 import {DataContext} from "../context/DataContext";
+import {useFetchPage} from "../hooks/useFetchPage";
 
 
 const columns = [
@@ -13,20 +14,13 @@ const columns = [
 ];
 
 export const Items = (props) => {
-    const {setState, page} = useContext(DataContext);
-
-    const fetItems = (tableState) => {
-        httpService.page("/mongo", tableState, data => {
-                setState(data)
-            }
-        )
-    }
+    const { fetchPage, page }= useFetchPage("/mongo");
 
     return (
         <div style={{height: "100%", width: "100%"}}>
             <Table columns={columns}
                    page={page}
-                   fetch={fetItems}/>
+                   fetch={fetchPage}/>
         </div>
     );
 

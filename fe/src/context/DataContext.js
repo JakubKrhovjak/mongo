@@ -6,14 +6,14 @@ export const DataContext = React.createContext();
 
 export const DataContextProvider = ({children}) => {
 
-    const [state, setState] = useState({page: {content: []}, error: null})
+    const [error, setError] = useState(null)
 
     return (
         <DataContext.Provider
-            value={{setState, page: state.page}}
+            value={{setError}}
         >
             <>
-                <Alert severity="error" message={getError(state.error)} show={!!state.error}/>
+                <Alert severity="error" message={getError(error)} show={!!error}/>
                 {children}
             </>
         </DataContext.Provider>
