@@ -50,6 +50,7 @@ public class SecurityConfiguration  {
                     .anyExchange().authenticated()
             )
             .cors()
+//            .disable()
             .and()
             .csrf()
             .disable()

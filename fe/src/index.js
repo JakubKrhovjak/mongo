@@ -1,31 +1,10 @@
 import React, {useState} from "react";
 import ReactDOM from "react-dom";
-import {Items} from "./pages/Items";
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
-import {Login} from "./pages/Login";
-import {DataContextProvider} from "./context/DataContext";
+import {App} from "./App";
 
 const Index = () => {
-    const [state, setState] = useState({token: "123", error: null});
-
-    if (!state?.token) {
-        return <Login setToken={setState}/>
-    }
-
     return (
-        <DataContextProvider>
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path='/items'>
-                        <Items/>
-                    </Route>
-                    <Route path='/'>
-                        <Login setToken={setState}/>
-                    </Route>
-                </Switch>
-            </BrowserRouter>
-        </DataContextProvider>
-
+        <App/>
     );
 }
 

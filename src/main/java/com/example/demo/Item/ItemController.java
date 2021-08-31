@@ -32,36 +32,41 @@ public class ItemController {
 
     @PostMapping
     public Mono<Page<Item>> getItems(@RequestBody TableRequest tableRequest) {
+        //        throw new RuntimeException();
+        log.info("Fetching items");
         Query query = QueryBuilder.buildQuery(tableRequest);
 
         var pageable = PageRequest.of(tableRequest.getPage(), tableRequest.getPageSize(), tableRequest.getSort());
-        return itemService.getPage(query, pageable);
+
+        var i = itemService.getPage(query, pageable);
+        log.info("Fetching items: {}", i);
+        return i;
     }
 
-//    @GetMapping(value = "/{itemId}")
-//    public Optional<Item> getItem(@PathVariable String itemId) {
-//        ExampleMatcher matcher = ExampleMatcher.matching()
-//            .withIgnorePaths("lastname")
-//            .withIncludeNullValues()
-//            .withStringMatcherEnding();
-//        return itemRepository.findOne(itemId);
-//    }
+    //    @GetMapping(value = "/{itemId}")
+    //    public Optional<Item> getItem(@PathVariable String itemId) {
+    //        ExampleMatcher matcher = ExampleMatcher.matching()
+    //            .withIgnorePaths("lastname")
+    //            .withIncludeNullValues()
+    //            .withStringMatcherEnding();
+    //        return itemRepository.findOne(itemId);
+    //    }
 
-//    @GetMapping(value = "/exact")
-//    public Flux<Item> getItem() {
-//        ExampleMatcher matcher = ExampleMatcher.matching()
-//            .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.exact());
-//
-//        return itemRepository.findAll(Example.of(new Item().setName("name"), matcher));
-//    }
+    //    @GetMapping(value = "/exact")
+    //    public Flux<Item> getItem() {
+    //        ExampleMatcher matcher = ExampleMatcher.matching()
+    //            .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.exact());
+    //
+    //        return itemRepository.findAll(Example.of(new Item().setName("name"), matcher));
+    //    }
 
-//    @PostMapping(value = "/item")
-//    public void postItem(@RequestBody Item item) {
-//        itemRepository.save(item);
-//    }
-//
-//    @GetMapping("/name")
-//    public Flux<Item> byName() {
-//     return itemRepository.byName("name");
-//    }
+    //    @PostMapping(value = "/item")
+    //    public void postItem(@RequestBody Item item) {
+    //        itemRepository.save(item);
+    //    }
+    //
+    //    @GetMapping("/name")
+    //    public Flux<Item> byName() {
+    //     return itemRepository.byName("name");
+    //    }
 }
